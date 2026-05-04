@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="သုတဓမ္မ ဒီပလိုမာ - University Of Wisdom Land မှ ဗုဒ္ဓဒေသနာ သင်ခန်းစာများ။ အဆင့် ၁-၃ သင်ခန်းစာများ၊ အဒီယို၊ PDF ဖိုင်များ ရှိသည်။">
+    <meta name="keywords" content="သုတဓမ္မ, ဒီပလိုမာ, ဗုဒ္ဓဒေသနာ, University Of Wisdom Land, ဓမ္မ, ဒါန, သီလ, ဘာဝနာ">
+    <meta name="author" content="University Of Wisdom Land">
+    <meta property="og:title" content="Suta Dhamma Diploma - သုတဓမ္မ ဒီပလိုမာ">
+    <meta property="og:description" content="ဗုဒ္ဓဒေသနာ သင်ခန်းစာများ - အဆင့် ၁-၃ အဒီယို၊ PDF ဖိုင်များ">
+    <meta property="og:image" content="https://i.ibb.co/LDh3jzBD/Sayadaw-nandamalabhivamsa.jpg">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#9b59b6">
+    
+    <title>Suta Dhamma Diploma - သုတဓမ္မ ဒီပလိုမာ</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #9b59b6;
+            --bg-body: #ffffff;
+            --bg-card: #ffffff;
+            --text-main: #2c3e50;
+            --nav-bg: #ffffff;
+            --border: #f0f0f0;
+            --tab-inactive: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #f0f0f0;
+            --nav-bg: #1e1e1e;
+            --border: #333333;
+            --tab-inactive: #2c2c2c;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Noto Sans Myanmar', sans-serif; margin: 0; background: var(--bg-body); color: var(--text-main); transition: 0.3s; line-height: 1.6; }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 15px; }
+
+        /* --- SPLASH SCREEN (FIXED) --- */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #2c003e;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease;
+        }
+        .hide-splash { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .splash-logo { 
+            width: 120px; 
+            height: 120px; 
+            border-radius: 50%; 
+            border: 4px solid #f1c40f; 
+            overflow: hidden; 
+            margin-bottom: 20px;
+        }
+
+        /* --- NAVIGATION --- */
+        nav { 
+            padding: 15px 0; 
+            border-bottom: 1px solid var(--border); 
+            background: var(--nav-bg); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
+        .logo-circle { width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--primary); overflow: hidden; }
+        .img-fix { width: 100%; height: 100%; object-fit: cover; }
+        .nav-buttons { display: flex; gap: 10px; align-items: center; }
+        .theme-toggle, .menu-toggle { border: none; background: none; font-size: 1.5rem; cursor: pointer; }
+
+        .main-title { text-align: center; color: var(--primary); font-size: 2.2rem; font-weight: bold; margin: 30px 0; }
+
+        /* --- SEARCH BAR --- */
+        .search-container { margin-bottom: 20px; }
+        .search-bar { 
+            width: 100%; 
+            padding: 12px 15px; 
+            border: 2px solid var(--border); 
+            border-radius: 20px; 
+            background: var(--bg-card); 
+            color: var(--text-main); 
+            font-size: 1rem;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            transition: 0.3s;
+        }
+        .search-bar:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 10px rgba(155, 89, 182, 0.2); }
+        .search-results { margin-top: 15px; }
+        .search-result-item { 
+            padding: 12px; 
+            background: var(--bg-card); 
+            border-radius: 12px; 
+            margin-bottom: 10px; 
+            cursor: pointer; 
+            border: 1px solid var(--border);
+            transition: 0.2s;
+        }
+        .search-result-item:hover { background: var(--tab-inactive); }
+        .search-result-title { color: var(--primary); font-weight: bold; }
+        .search-result-level { font-size: 0.9rem; color: #888; }
+
+        /* --- TAB GROUP --- */
+        .tab-group { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab-btn { 
+            padding: 10px 18px; border-radius: 20px; border: 1px solid var(--border); 
+            background: var(--tab-inactive); color: var(--text-main); cursor: pointer; font-weight: bold; transition: 0.3s;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+        }
+        .tab-btn.active { 
+            background: var(--primary) !important; 
+            color: white !important; 
+            border-color: var(--primary); 
+        }
+
+        /* --- LESSON CARD --- */
+        .lesson-card { 
+            background: var(--bg-card); 
+            padding: 18px; 
+            border-radius: 20px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            cursor: pointer; 
+            border: 1px solid var(--border);
+            transition: 0.2s;
+            position: relative;
+        }
+        .lesson-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .lesson-card.completed { opacity: 0.7; }
+        .lesson-card.completed::after { 
+            content: '✓'; 
+            position: absolute; 
+            top: 10px; 
+            right: 15px; 
+            color: #27ae60; 
+            font-size: 1.5rem; 
+            font-weight: bold;
+        }
+        .num-box { 
+            min-width: 38px; 
+            height: 38px; 
+            background: #fff; 
+            border-radius: 12px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            color: var(--primary); 
+            border: 1px solid #ddd;
+        }
+        [data-theme="dark"] .num-box { background: #333; border-color: #444; }
+        .lesson-text { color: var(--primary); font-weight: bold; font-size: 1.1rem; flex: 1; }
+        [data-theme="dark"] .lesson-text { color: #f0f0f0; }
+
+        /* --- PLAYER PAGE --- */
+        #player-page { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: var(--bg-body); 
+            z-index: 3000; 
+            overflow-y: auto; 
+            padding-top: 20px; 
+        }
+        .player-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .player-close { background: none; border: none; color: var(--text-main); font-weight: bold; cursor: pointer; font-size: 1.2rem; }
+        .player-actions { display: flex; gap: 10px; }
+        .player-btn { 
+            padding: 8px 12px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+            background: var(--tab-inactive); 
+            color: var(--text-main); 
+            cursor: pointer; 
+            font-size: 0.9rem;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            transition: 0.2s;
+        }
+        .player-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        #p-title { color: var(--primary); margin: 20px 0; }
+        .audio-container { margin: 20px 0; }
+        #audio { width: 100%; margin-bottom: 20px; }
+        .pdf-viewer { width: 100%; height: 70vh; border: 1px solid var(--border); border-radius: 20px; }
+        .hidden { display: none !important; }
+
+        /* --- MODAL STYLES --- */
+        .modal { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 5000;
+            padding: 20px;
+        }
+        .modal.show { display: flex; }
+        .modal-content { 
+            background: var(--bg-card); 
+            border-radius: 20px; 
+            padding: 30px; 
+            max-width: 500px; 
+            width: 100%; 
+            max-height: 90vh; 
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-close { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: none; 
+            border: none; 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            color: var(--text-main);
+        }
+        .modal-title { color: var(--primary); font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
+
+        /* --- FORM STYLES --- */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); }
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+            background: var(--bg-body); 
+            color: var(--text-main); 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 1rem;
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 10px rgba(155, 89, 182, 0.2); }
+        .btn-submit { 
+            width: 100%; 
+            padding: 12px; 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1rem;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            transition: 0.3s;
+        }
+        .btn-submit:hover { opacity: 0.9; }
+
+        /* --- SOCIAL SHARING --- */
+        .social-share { display: flex; gap: 10px; margin-top: 15px; }
+        .social-btn { 
+            flex: 1; 
+            padding: 10px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+            background: var(--tab-inactive); 
+            color: var(--text-main); 
+            cursor: pointer; 
+            font-weight: bold;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .social-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* --- PROGRESS BAR --- */
+        .progress-bar { 
+            width: 100%; 
+            height: 8px; 
+            background: var(--border); 
+            border-radius: 10px; 
+            overflow: hidden; 
+            margin-bottom: 20px;
+        }
+        .progress-fill { 
+            height: 100%; 
+            background: var(--primary); 
+            transition: width 0.3s;
+        }
+
+        /* --- ABOUT/CONTACT SECTION --- */
+        .section { margin-bottom: 40px; }
+        .section-title { 
+            color: var(--primary); 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        .section-content { line-height: 1.8; }
+        .contact-info { 
+            background: var(--tab-inactive); 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 15px;
+        }
+        .contact-item { margin-bottom: 10px; }
+        .contact-label { font-weight: bold; color: var(--primary); }
+
+        /* --- MENU STYLES --- */
+        .menu-overlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            display: none; 
+            z-index: 2000;
+        }
+        .menu-overlay.show { display: block; }
+        .side-menu { 
+            position: fixed; 
+            top: 0; 
+            right: -300px; 
+            width: 300px; 
+            height: 100%; 
+            background: var(--nav-bg); 
+            z-index: 2001; 
+            transition: right 0.3s;
+            overflow-y: auto;
+            border-left: 1px solid var(--border);
+        }
+        .side-menu.show { right: 0; }
+        .menu-header { 
+            padding: 20px; 
+            border-bottom: 1px solid var(--border); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .menu-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-main); }
+        .menu-items { padding: 20px 0; }
+        .menu-item { 
+            padding: 15px 20px; 
+            cursor: pointer; 
+            color: var(--text-main); 
+            border-bottom: 1px solid var(--border);
+            transition: 0.2s;
+        }
+        .menu-item:hover { background: var(--tab-inactive); color: var(--primary); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 480px) {
+            .container { padding: 0 10px; }
+            .main-title { font-size: 1.8rem; }
+            .tab-group { gap: 5px; }
+            .tab-btn { padding: 8px 12px; font-size: 0.9rem; }
+            .lesson-card { gap: 12px; padding: 12px; }
+            .lesson-text { font-size: 0.95rem; }
+            .modal-content { padding: 20px; }
+            #player-page { padding-top: 10px; }
+            .pdf-viewer { height: 50vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash">
+        <div class="splash-logo">
+            <img src="https://i.ibb.co/LDh3jzBD/Sayadaw-nandamalabhivamsa.jpg" class="img-fix" alt="University Of Wisdom Land">
+        </div>
+        <h2 style="color: white; font-family: sans-serif;">University Of Wisdom Land</h2>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container nav-flex">
+            <div class="nav-left">
+                <div class="logo-circle"><img src="https://i.ibb.co/LDh3jzBD/Sayadaw-nandamalabhivamsa.jpg" class="img-fix" alt="Logo"></div>
+                <div>
+                    <strong style="display:block; font-size: 1.1rem;">Suta Dhamma Diploma</strong>
+                    <span style="font-size: 0.8rem; color: #f1c40f;">University Of Wisdom Land</span>
+                </div>
+            </div>
+            <div class="nav-buttons">
+                <button class="theme-toggle" onclick="toggleTheme()" title="အမှောင်/အလင်း ပြောင်းလဲ">☀️</button>
+                <button class="menu-toggle" onclick="toggleMenu()" title="မီနူး">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDE MENU -->
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <strong>မီနူး</strong>
+            <button class="menu-close" onclick="toggleMenu()">✕</button>
+        </div>
+        <div class="menu-items">
+            <div class="menu-item" onclick="showSection('home'); toggleMenu();">🏠 အဖြေ</div>
+            <div class="menu-item" onclick="showSection('about'); toggleMenu();">ℹ️ အကြောင်း</div>
+            <div class="menu-item" onclick="showSection('contact'); toggleMenu();">📞 ဆက်သွယ်ရန်</div>
+            <div class="menu-item" onclick="showSection('progress'); toggleMenu();">📊 ရှေ့ဆောင်ခြင်း</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="container" id="homeSection">
+        <h1 class="main-title">သုတဓမ္မ ဒီပလိုမာ</h1>
+        
+        <!-- PROGRESS BAR -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="သင်ခန်းစာများကို ရှာဖွေပါ..." onkeyup="searchLessons()">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tab-group">
+            <button class="tab-btn active" id="b1" onclick="load(1)">Level - 1</button>
+            <button class="tab-btn" id="b2" onclick="load(2)">Level - 2</button>
+            <button class="tab-btn" id="b3" onclick="load(3)">Level - 3</button>
+        </div>
+
+        <!-- LESSONS LIST -->
+        <div id="list"></div>
+    </main>
+
+    <!-- ABOUT SECTION -->
+    <main class="container hidden" id="aboutSection">
+        <h1 class="main-title">အကြောင်း</h1>
+        
+        <div class="section">
+            <h2 class="section-title">🏛️ University Of Wisdom Land</h2>
+            <div class="section-content">
+                <p>University Of Wisdom Land သည် ဗုဒ္ဓဒေသနာ သင်ခန်းစာများ ပေးလျှက်ရှိသော ကျော်ကြားသော အဆင့်မြင့် ပညာရပ်ကျောင်းဖြစ်သည်။ ဤတွင် သုတဓမ္မ ဒီပလိုမာ သင်ခန်းစာများ အဆင့် ၁ မှ ၃ အထိ ရှိသည်။</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📚 သုတဓမ္မ ဒီပလိုမာ</h2>
+            <div class="section-content">
+                <p>သုတဓမ္မ ဒီပလိုမာ သည် ဗုဒ္ဓဒေသနာ၏ အခြင်းအခြာ သင်ခန်းစာများ ပါဝင်သည့် အလွတ်ကျမ်းများ ဖြစ်သည်။ ဤသင်ခန်းစာများတွင် ဘဝခရီးဝယ်ရွေးချယ်ရမည့်လမ်း၊ မေတ္တသုတ်၊ စိတ်၏အညစ်အကြေးများ ဖယ်ရှားခြင်း၊ သမထနှင့် ဝိပဿနာ စသည်ဖြင့် အရေးကြီးသော အကြောင်းအရာများ ပါဝင်သည်။</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🎓 သင်ခန်းစာ အဆင့်များ</h2>
+            <div class="section-content">
+                <p><strong>Level 1:</strong> အခြေခံ သုတဓမ္မ သင်ခန်းစာများ - ဘဝခရီးဝယ်ရွေးချယ်ရမည့်လမ်း၊ မေတ္တသုတ်၊ စိတ်၏အညစ်အကြေးများ ဖယ်ရှားခြင်း၊ မြတ်ဗုဒ္ဒဒေသနာနှင့် ယနေ့ကမ္ဘာ၊ သမထနှင့် ဝိပဿနာ</p>
+                <p><strong>Level 2:</strong> အလယ်အဆင့် သုတဓမ္မ သင်ခန်းစာများ - ဓမ္မအသိဖြင့် အကျိုးရှိရှိနေမည်၊ စိတ်၏အတွေးများ၊ ဥပုသ်စောင့်ခြင်း အဓိပ္ပာယ်၊ ခန္ဓသုတ်၊ လူတိုင်းကျင့်ရန် သတိပဠာန်</p>
+                <p><strong>Level 3:</strong> အမြင့်အဆင့် သုတဓမ္မ သင်ခန်းစာများ - သူတော်ကောင်းတို့၏ စိတ်နေသဘောထား၊ ဘာသာတရားလိုက်နာကျင့်သုံးခြင်း၏ ရည်ရွယ်ချက်၊ စိတ်၏ထွက်ပေါက်များ၊ ရတနာသုတ်၊ ရှင်အာနန္ဒာ၏ ဝိပဿနာ</p>
+            </div>
+        </div>
+
+        <button class="tab-btn" onclick="showSection('home')" style="width: 100%; margin-top: 20px;">← အဖြေသို့ ပြန်သွားပါ</button>
+    </main>
+
+    <!-- CONTACT SECTION -->
+    <main class="container hidden" id="contactSection">
+        <h1 class="main-title">ဆက်သွယ်ရန်</h1>
+        
+        <div class="section">
+            <h2 class="section-title">📞 ဆက်သွယ်ရန် အချက်အလက်</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-label">📧 အီမေးလ်:</span>
+                    <p>info@universitywisdomland.edu.mm</p>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">📱 ဖုန်း:</span>
+                    <p>+95 (0) 123-456-789</p>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">🌐 ဝဘ်ဆိုက်:</span>
+                    <p>www.universitywisdomland.edu.mm</p>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">📍 လိပ်စာ:</span>
+                    <p>University Of Wisdom Land, Yangon, Myanmar</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">💬 ကျွန်ုပ်တို့အား စာတိုက်ပို့ပါ</h2>
+            <button class="tab-btn" onclick="openFeedbackModal()" style="width: 100%; margin-bottom: 20px;">📝 အကြံပြုချက်/မြန်စာ ပို့ရန်</button>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🤝 ကျွန်ုပ်တို့ကို လိုက်နာပါ</h2>
+            <div class="social-share">
+                <button class="social-btn" onclick="shareOnFacebook()">Facebook</button>
+                <button class="social-btn" onclick="shareOnTelegram()">Telegram</button>
+            </div>
+        </div>
+
+        <button class="tab-btn" onclick="showSection('home')" style="width: 100%; margin-top: 20px;">← အဖြေသို့ ပြန်သွားပါ</button>
+    </main>
+
+    <!-- PROGRESS SECTION -->
+    <main class="container hidden" id="progressSection">
+        <h1 class="main-title">ရှေ့ဆောင်ခြင်း</h1>
+        
+        <div class="section">
+            <h2 class="section-title">📊 သင်ခန်းစာ ပြီးစီးမှု အခြေအနေ</h2>
+            <div id="progressDetails"></div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🔄 ရှေ့ဆောင်ခြင်း ပြန်သတ်မှတ်ခြင်း</h2>
+            <button class="tab-btn" onclick="resetProgress()" style="width: 100%; background: #e74c3c; color: white; border-color: #e74c3c;">🔄 အားလုံး ပြန်သတ်မှတ်ပါ</button>
+            <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">ဤလုပ်ဆောင်ချက်သည် သင့်ရဲ့ အားလုံးသော ပြီးစီးမှု မှတ်သားချက်များကို ဖျက်ပစ်လိမ့်မည်။</p>
+        </div>
+
+        <button class="tab-btn" onclick="showSection('home')" style="width: 100%; margin-top: 20px;">← အဖြေသို့ ပြန်သွားပါ</button>
+    </main>
+
+    <!-- PLAYER PAGE -->
+    <div id="player-page" class="hidden">
+        <div class="container">
+            <div class="player-header">
+                <h2 id="p-title" style="color:var(--primary); margin: 0; flex: 1;">Title</h2>
+                <div class="player-actions">
+                    <button class="player-btn" onclick="downloadAudio()" title="အဒီယို ဒေါင်းလုဒ်">🔊 MP3</button>
+                    <button class="player-btn" onclick="downloadPDF()" title="PDF ဒေါင်းလုဒ်">📄 PDF</button>
+                    <button class="player-btn" onclick="shareLesson()" title="မျှဝေပါ">📤 မျှဝေ</button>
+                    <button class="player-close" onclick="closePlayer()" title="ပိတ်ပါ">✕</button>
+                </div>
+            </div>
+            <div class="audio-container">
+                <audio id="audio" controls></audio>
+            </div>
+            <iframe id="pdf" class="pdf-viewer"></iframe>
+        </div>
+    </div>
+
+    <!-- FEEDBACK MODAL -->
+    <div class="modal" id="feedbackModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeFeedbackModal()">✕</button>
+            <h2 class="modal-title">📝 အကြံပြုချက်/မြန်စာ</h2>
+            <form onsubmit="submitFeedback(event)">
+                <div class="form-group">
+                    <label for="feedbackName">အမည်:</label>
+                    <input type="text" id="feedbackName" required placeholder="သင့်အမည်ကို ထည့်သွင်းပါ">
+                </div>
+                <div class="form-group">
+                    <label for="feedbackEmail">အီမေးလ်:</label>
+                    <input type="email" id="feedbackEmail" required placeholder="သင့်အီမေးလ်ကို ထည့်သွင်းပါ">
+                </div>
+                <div class="form-group">
+                    <label for="feedbackType">အမျိုးအစား:</label>
+                    <select id="feedbackType" required>
+                        <option value="">အမျိုးအစား ရွေးချယ်ပါ</option>
+                        <option value="suggestion">အကြံပြုချက်</option>
+                        <option value="bug">အမှားအယွင်း</option>
+                        <option value="praise">ချီးမွမ်းခြင်း</option>
+                        <option value="other">အခြား</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="feedbackMessage">စာတိုက်:</label>
+                    <textarea id="feedbackMessage" required placeholder="သင့်အကြံပြုချက် သို့မဟုတ် မြန်စာကို ထည့်သွင်းပါ"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">📤 ပို့ပြီး</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // LESSON DATA
+        const lessonData = {
+            1: [
+                { t: "ဘဝခရီးဝယ်ရွေးချယ်ရမည့်လမ်း", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/001-UOWL-Sutadhamma-2007-07-25-bawakhayeewair.mp3", p: "https://dhammadownload.com/File-Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/UOWL-A4-Book1.pdf" },
+                { t: "မေတ္တသုတ်အနှစ်ချုပ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/004-UOWL-Sutadhamma-2009-12-20-MettaThoatAhNhitChoke.mp3", p: "https://gtg-drnandamala.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2022/01/14023742/%E1%80%99%E1%80%B1%E1%80%90%E1%80%B9%E1%80%90%E1%80%AC%E1%80%9E%E1%80%AF%E1%80%90%E1%80%BA%E1%80%A1%E1%80%94%E1%80%BE%E1%80%85%E1%80%BA%E1%80%81%E1%80%BB%E1%80%AF%E1%80%95%E1%80%BA.pdf" },
+                { t: "စိတ်၏အညစ်အကြေးများကို ဖယ်ရှားခြင်း", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/003-UOWL-Sutadhamma-2011-02-13-SateEiAhNyitAhKayeMyar.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/06/56-Dr-Nandamala-SaitEiAhNyitAhKayeMyarKoPawelSharChin.pdf" },
+                { t: "မြတ်ဗုဒ္ဒဒေသနာနှင့်‌ယနေ့ကမ္ဘာ", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/002-UOWL-Sutadhamma-MyatBuddhaNhitYaNaeKabar.mp3", p: "https://dhammadownload.com/File-Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/UOWL-A4-Book2.pdf" },
+                { t: "သမထနှင့် ဝိပဿနာ", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/005-UOWL-Sutadhamma-2008-12-18-samatha-and-vipassana.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/06/Dr-Nandamalabhivamsa-ThaMaHtaNhintWiPaThaNar-compressed.pdf" }
+            ],
+            2: [
+                { t: "ဓမ္မအသိဖြင့် အကျိုးရှိရှိနေမည်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/006-UOWL-Sutadhamma-2008-10-18-DhammaAhTheatPhyint.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/006-Dr-Nandamalabhivamsa-DhammarAThiPhinAkyoChiChiNayMyi.pdf" },
+                { t: "စိတ်၏အတွေးများ", a: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/Level%E1%81%82-%E1%80%85%E1%80%AD%E1%80%90%E1%80%BA%E1%81%8F%E1%80%A1%E1%80%90%E1%80%BD%E1%80%B1%E1%80%B8%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/007-UOWL-Sutadhamma-2009-02-04-SaitEiAhTwayMyar.pdf" },
+                { t: "ဥပုသ်စောင့်ခြင်း အဓိပ္ပာယ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/008-UOWL-Sutadhamma-2009-04-02-AuPokeSauntChinAhDatePel.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/008-UOWL-Sutadhamma-2009-04-02-AuPokeSauntChinAhDatePel.pdf" },
+                { t: "ခန္ဓသုတ်အနှစ်ချုပ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/009-UOWL-Sutadhamma-2010-03-18-KhandaThoatAhNyitCholte.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/009-UOWL-Sutadhamma-2010-03-18-KhandaThoatAhNyitCholte.pdf" },
+                { t: "လူတိုင်းကျင့်ရန် သတိပဠာန်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/010-UOWL-Sutadhamma-2009-04-16-LuTainKyinkYanThaTiPaHtan.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/010-UOWL-Sutadhamma-2009-04-16-LuTainKyinkYanThaTiPaHtan.pdf" }
+            ],
+            3: [
+                { t: "သူတော်ကောင်းတို့၏ စိတ်နေသဘောထား", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/011-UOWL-Sutadhamma-2008-11-25-ThuTawKaungToIiSaitNayThaBawHtar.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/011-UOWL-Sutadhamma-2008-11-25-ThuTawKaungToIiSaitNayThaBawHtar.pdf" },
+                { t: "ဘာသာတရားလိုက်နာကျင့်သုံးခြင်း၏ ရည်ရွယ်ချက်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/012-UOWL-Sutadhamma-2010-10-05-BarTharTaYarLiteNarKyintThoneChinAiYeeYwarChat.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/012-UOWL-Sutadhamma-2010-10-05-BarTharTaYarLiteNarKyintThoneChinAiYeeYwarChat.pdf" },
+                { t: "စိတ်၏ထွက်ပေါက်များ", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/013-UOWL-Sutadhamma-2009-12-01-SaitEiHtawkPaukMyar.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/013-UOWL-Sutadhamma-2009-12-01-SaitEiHtawkPaukMyar.pdf" },
+                { t: "ရတနာသုတ် အနှစ်ချုပ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/014-1-UOWL-Sutadhamma-2010-07-03-YadaNaThoteAhNhitChote-1.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/014-UOWL-Sutadhamma-2010-07-03-YadaNaThoteAhNhitChote.pdf" },
+                { t: "ရှင်အာနန္ဒာ၏ ဝိပဿနာ", a: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/Level%E1%81%83-%E1%80%9B%E1%80%BE%E1%80%84%E1%80%BA%E1%80%A1%E1%80%AC%E1%80%94%E1%80%94%E1%80%B9%E1%80%92%E1%80%AC%E1%81%8F%E1%80%9D%E1%80%AD%E1%80%95%E1%80%BF%E1%80%94%E1%80%AC.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/015-UOWL-Sutadhamma-2010-04-03-AshinArNandaEiVipassana.pdf" }
+            ]
+        };
+
+        let currentLevel = 1;
+        let currentLessonIndex = -1;
+        const audio = document.getElementById('audio');
+
+        // INITIALIZE
+        window.onload = () => {
+            load(1);
+            updateProgressBar();
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.classList.add('hide-splash');
+            }, 3000);
+        };
+
+        // LOAD LESSONS
+        function load(lvl) {
+            currentLevel = lvl;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById('b'+lvl);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            const list = document.getElementById('list');
+            list.innerHTML = '';
+            lessonData[lvl].forEach((item, i) => {
+                const lessonId = `${lvl}-${i}`;
+                const isCompleted = isLessonCompleted(lessonId);
+                
+                const div = document.createElement('div');
+                div.className = 'lesson-card' + (isCompleted ? ' completed' : '');
+                div.innerHTML = `<div class="num-box">${i+1}</div><div class="lesson-text">${item.t}</div>`;
+                div.onclick = () => playLesson(item, lvl, i, lessonId);
+                list.appendChild(div);
+            });
+            updateProgressBar();
+        }
+
+        // PLAY LESSON
+        function playLesson(item, lvl, idx, lessonId) {
+            currentLessonIndex = idx;
+            document.getElementById('player-page').classList.remove('hidden');
+            document.getElementById('p-title').innerText = item.t;
+            audio.src = item.a;
+            document.getElementById('pdf').src = `https://docs.google.com/viewer?url=${encodeURIComponent(item.p)}&embedded=true`;
+            audio.play();
+            
+            // Mark as completed
+            markLessonCompleted(lessonId);
+            load(lvl);
+        }
+
+        // CLOSE PLAYER
+        function closePlayer() { 
+            document.getElementById('player-page').classList.add('hidden'); 
+            audio.pause(); 
+        }
+
+        // THEME TOGGLE
+        function toggleTheme() {
+            const b = document.body;
+            const isDark = b.getAttribute('data-theme') === 'dark';
+            b.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            document.querySelector('.theme-toggle').innerText = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        }
+
+        // MENU TOGGLE
+        function toggleMenu() {
+            const overlay = document.getElementById('menuOverlay');
+            const menu = document.getElementById('sideMenu');
+            overlay.classList.toggle('show');
+            menu.classList.toggle('show');
+        }
+
+        // SHOW SECTION
+        function showSection(section) {
+            document.getElementById('homeSection').classList.toggle('hidden', section !== 'home');
+            document.getElementById('aboutSection').classList.toggle('hidden', section !== 'about');
+            document.getElementById('contactSection').classList.toggle('hidden', section !== 'contact');
+            document.getElementById('progressSection').classList.toggle('hidden', section !== 'progress');
+            
+            if (section === 'progress') {
+                updateProgressDetails();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // SEARCH LESSONS
+        function searchLessons() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (!query) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            let results = [];
+            for (let lvl in lessonData) {
+                lessonData[lvl].forEach((item, i) => {
+                    if (item.t.toLowerCase().includes(query)) {
+                        results.push({ lvl, i, item });
+                    }
+                });
+            }
+
+            resultsDiv.innerHTML = results.map(r => `
+                <div class="search-result-item" onclick="playLesson(this.dataset.item, ${r.lvl}, ${r.i}, '${r.lvl}-${r.i}'); document.getElementById('searchInput').value = '';">
+                    <div class="search-result-title">${r.item.t}</div>
+                    <div class="search-result-level">Level ${r.lvl}</div>
+                </div>
+            `).join('');
+
+            // Store data for onclick
+            results.forEach((r, idx) => {
+                document.querySelectorAll('.search-result-item')[idx].dataset.item = JSON.stringify(r.item);
+            });
+        }
+
+        // DOWNLOAD AUDIO
+        function downloadAudio() {
+            const title = document.getElementById('p-title').innerText;
+            const link = document.createElement('a');
+            link.href = audio.src;
+            link.download = title + '.mp3';
+            link.click();
+        }
+
+        // DOWNLOAD PDF
+        function downloadPDF() {
+            const pdfSrc = document.getElementById('pdf').src;
+            const originalUrl = new URLSearchParams(pdfSrc.split('?')[1]).get('url');
+            if (originalUrl) {
+                const link = document.createElement('a');
+                link.href = decodeURIComponent(originalUrl);
+                link.download = document.getElementById('p-title').innerText + '.pdf';
+                link.click();
+            }
+        }
+
+        // SHARE LESSON
+        function shareLesson() {
+            const title = document.getElementById('p-title').innerText;
+            const text = `သုတဓမ္မ ဒီပလိုမာ - ${title}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Suta Dhamma Diploma',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                alert(text);
+            }
+        }
+
+        // SOCIAL SHARING
+        function shareOnFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareOnTelegram() {
+            const url = window.location.href;
+            const text = 'သုတဓမ္မ ဒီပလိုမာ - University Of Wisdom Land';
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        // PROGRESS TRACKING
+        function markLessonCompleted(lessonId) {
+            let completed = JSON.parse(localStorage.getItem('completedLessons') || '[]');
+            if (!completed.includes(lessonId)) {
+                completed.push(lessonId);
+                localStorage.setItem('completedLessons', JSON.stringify(completed));
+            }
+        }
+
+        function isLessonCompleted(lessonId) {
+            const completed = JSON.parse(localStorage.getItem('completedLessons') || '[]');
+            return completed.includes(lessonId);
+        }
+
+        function updateProgressBar() {
+            let total = 0;
+            let completed = 0;
+            const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '[]');
+            
+            for (let lvl in lessonData) {
+                total += lessonData[lvl].length;
+                lessonData[lvl].forEach((_, i) => {
+                    if (completedLessons.includes(`${lvl}-${i}`)) {
+                        completed++;
+                    }
+                });
+            }
+
+            const percentage = total > 0 ? (completed / total) * 100 : 0;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        function updateProgressDetails() {
+            const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '[]');
+            let html = '';
+            
+            for (let lvl in lessonData) {
+                let levelCompleted = 0;
+                lessonData[lvl].forEach((_, i) => {
+                    if (completedLessons.includes(`${lvl}-${i}`)) {
+                        levelCompleted++;
+                    }
+                });
+                const percentage = (levelCompleted / lessonData[lvl].length) * 100;
+                html += `
+                    <div style="margin-bottom: 20px;">
+                        <strong>Level ${lvl}: ${levelCompleted}/${lessonData[lvl].length} (${Math.round(percentage)}%)</strong>
+                        <div class="progress-bar" style="margin-top: 10px;">
+                            <div class="progress-fill" style="width: ${percentage}%;"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('progressDetails').innerHTML = html;
+        }
+
+        function resetProgress() {
+            if (confirm('သင့်ရဲ့ အားလုံးသော ပြီးစီးမှု မှတ်သားချက်များကို ဖျက်ပစ်ရန် အတည်ပြုပါ။')) {
+                localStorage.removeItem('completedLessons');
+                load(currentLevel);
+                updateProgressBar();
+                alert('ပြီးစီးမှု မှတ်သားချက်များ ပြန်သတ်မှတ်ပြီးပါပြီ။');
+            }
+        }
+
+        // FEEDBACK MODAL
+        function openFeedbackModal() {
+            document.getElementById('feedbackModal').classList.add('show');
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.remove('show');
+        }
+
+        function submitFeedback(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('feedbackName').value;
+            const email = document.getElementById('feedbackEmail').value;
+            const type = document.getElementById('feedbackType').value;
+            const message = document.getElementById('feedbackMessage').value;
+            
+            // Store feedback (in real app, send to server)
+            let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
+            feedbacks.push({
+                name, email, type, message,
+                date: new Date().toLocaleString('my-MM')
+            });
+            localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+            
+            alert('အကြံပြုချက်/မြန်စာ ပို့ပြီးပါပြီ။ ကျေးဇူးပြု၍ အကြံပြုချက်ပေးလျှက် ရှိသည့် အတွက် ကျေးဇူးတင်ပါသည်။');
+            closeFeedbackModal();
+            document.querySelector('#feedbackModal form').reset();
+        }
+
+        // LOAD THEME FROM STORAGE
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            document.querySelector('.theme-toggle').innerText = savedTheme === 'dark' ? '🌙' : '☀️';
+        });
+
+        // CLOSE MENU ON ESCAPE
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('sideMenu').classList.remove('show');
+                document.getElementById('menuOverlay').classList.remove('show');
+                closeFeedbackModal();
+            }
+        });
+    </script>
+</body>
+</html>
