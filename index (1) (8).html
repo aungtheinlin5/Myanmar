@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suta Dhamma Diploma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Suta Dhamma">
+    <meta name="theme-color" content="#ffd04a">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/LDh3jzBD/Sayadaw-nandamalabhivamsa.jpg">
+    <style>
+        :root {
+            --gold: #ffd04a;
+            --gold-light: #ffe98a;
+            --gold-dim: #c49a1a;
+            --deep: #0d0a1a;
+            --surface: #15112a;
+            --surface2: #1e1838;
+            --border: rgba(255,208,74,0.3);
+            --text: #f5eedc;
+            --text-dim: #b0a888;
+            --primary: #ffd04a;
+            --ruby: #e0445a;
+        }
+
+        [data-theme="light"] {
+            --deep: #f5f0e8;
+            --surface: #fffdf7;
+            --surface2: #f0e8d4;
+            --border: rgba(180,130,0,0.25);
+            --text: #1a1000;
+            --text-dim: #6a5020;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            background: var(--deep);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+            overflow-x: hidden;
+        }
+
+        /* Decorative background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 10%, rgba(255,208,74,0.13) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(130,70,220,0.13) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── SPLASH ── */
+        #splash {
+            position: fixed; inset: 0;
+            background: #08051a;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            z-index: 99999;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+        #splash.hide-splash {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .splash-ring {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            background: linear-gradient(#08051a, #08051a) padding-box,
+                        linear-gradient(135deg, var(--gold), #9a50ff, var(--gold)) border-box;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+            animation: pulse-ring 2s ease infinite;
+            position: relative;
+        }
+        .splash-ring img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; }
+        .splash-ring::after {
+            content: ''; position: absolute; inset: -8px; border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.2);
+            animation: pulse-ring 2s ease infinite 0.5s;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.03); }
+        }
+        .splash-title { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; }
+        .splash-sub { color: var(--text-dim); font-size: 0.85rem; margin-top: 8px; }
+        .splash-bar {
+            width: 160px; height: 2px; background: rgba(201,168,76,0.2);
+            margin-top: 32px; border-radius: 2px; overflow: hidden;
+        }
+        .splash-bar-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-light));
+            border-radius: 2px;
+            animation: bar-fill 2.8s ease forwards;
+        }
+        @keyframes bar-fill { to { width: 100%; } }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(13,10,26,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        [data-theme="light"] nav { background: rgba(255,253,247,0.88); }
+
+        .nav-inner {
+            max-width: 640px; margin: 0 auto;
+            padding: 14px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-left { display: flex; align-items: center; gap: 14px; }
+        .logo-ring {
+            width: 46px; height: 46px; border-radius: 50%;
+            border: 2px solid var(--gold);
+            overflow: hidden; flex-shrink: 0;
+        }
+        .logo-ring img { width: 100%; height: 100%; object-fit: cover; }
+        .nav-titles strong { display: block; font-size: 1rem; color: var(--text); }
+        .nav-titles span { font-size: 0.75rem; color: var(--gold); letter-spacing: 1px; }
+
+        .theme-btn {
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 50%; width: 38px; height: 38px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem; transition: 0.3s;
+        }
+        .theme-btn:hover { border-color: var(--gold); transform: rotate(20deg); }
+
+        /* ── MAIN ── */
+        .container { max-width: 640px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+        .hero {
+            text-align: center;
+            padding: 48px 0 36px;
+        }
+        .hero-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1.3;
+            text-shadow: 0 0 50px rgba(255,208,74,0.5), 0 0 100px rgba(255,208,74,0.2);
+        }
+        .hero-divider {
+            display: flex; align-items: center; gap: 12px;
+            margin: 20px auto; max-width: 260px;
+        }
+        .hero-divider::before, .hero-divider::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold-dim));
+        }
+        .hero-divider::after { background: linear-gradient(to left, transparent, var(--gold-dim)); }
+        .hero-divider span { color: var(--gold); font-size: 1rem; }
+
+        /* ── TABS ── */
+        .tabs {
+            display: flex; gap: 8px;
+            margin-bottom: 32px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 6px;
+        }
+        .tab-btn {
+            flex: 1; padding: 10px 8px;
+            border: none; border-radius: 12px;
+            background: transparent; color: var(--text-dim);
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+            color: #0d0a1a;
+            box-shadow: 0 4px 20px rgba(255,208,74,0.45);
+        }
+        .tab-btn:not(.active):hover { color: var(--gold); }
+
+        /* ── LESSON CARDS ── */
+        #list { padding-bottom: 40px; }
+
+        .lesson-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .lesson-card:hover {
+            border-color: rgba(255,208,74,0.55);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255,208,74,0.12);
+        }
+
+        .card-top {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px 18px;
+            cursor: pointer;
+        }
+        .num-box {
+            min-width: 40px; height: 40px; border-radius: 12px;
+            background: linear-gradient(135deg, var(--surface2), var(--deep));
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: var(--gold); font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+        .lesson-text { color: var(--text); font-weight: 600; font-size: 1rem; flex: 1; }
+        .card-arrow { color: var(--text-dim); font-size: 1.1rem; transition: transform 0.3s; }
+        .lesson-card:hover .card-arrow { transform: translateX(4px); color: var(--gold); }
+
+        /* Download buttons bar */
+        .card-actions {
+            display: flex; gap: 0;
+            border-top: 1px solid var(--border);
+        }
+        .dl-btn {
+            flex: 1; padding: 11px 12px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            border: none; background: transparent;
+            color: var(--text-dim); font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.82rem; cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+            text-decoration: none;
+        }
+        .dl-btn:first-child { border-right: 1px solid var(--border); }
+        .dl-btn:hover { background: rgba(201,168,76,0.08); color: var(--gold); }
+        .dl-btn .dl-icon { font-size: 1rem; }
+
+        /* ── PLAYER PAGE ── */
+        #player-page {
+            position: fixed; inset: 0;
+            background: var(--deep);
+            z-index: 3000;
+            overflow-y: auto;
+        }
+        #player-page.hidden { display: none; }
+
+        .player-inner { max-width: 640px; margin: 0 auto; padding: 20px 20px 60px; }
+
+        .player-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 24px;
+        }
+        .close-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--surface); border: 1px solid var(--border);
+            color: var(--text); font-size: 1.1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: 0.2s;
+        }
+        .close-btn:hover { border-color: var(--ruby); color: var(--ruby); }
+        .player-title-wrap { flex: 1; }
+        .player-label { font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 4px; }
+        #p-title { font-size: 1.1rem; color: var(--text); font-weight: 600; }
+
+        /* Custom Audio Player */
+        .audio-wrap {
+            background: linear-gradient(135deg, #1a1530, #0f0c20);
+            border: 1px solid rgba(255,208,74,0.35);
+            border-radius: 20px;
+            padding: 20px 20px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 0 40px rgba(255,208,74,0.08);
+        }
+        .cp-time-row {
+            display: flex; justify-content: space-between;
+            font-size: 0.78rem; color: var(--gold); font-weight: 600;
+            margin-bottom: 8px; letter-spacing: 0.5px;
+        }
+        .cp-seek-wrap {
+            margin-bottom: 18px; cursor: pointer; padding: 6px 0;
+        }
+        .cp-seek-bg {
+            height: 5px; border-radius: 99px;
+            background: rgba(255,208,74,0.15);
+            position: relative;
+        }
+        .cp-seek-fill {
+            height: 100%; border-radius: 99px; width: 0%;
+            background: linear-gradient(90deg, #c49a1a, #ffd04a, #ffe98a);
+            transition: width 0.2s linear;
+            position: relative;
+        }
+        .cp-seek-thumb {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: #ffd04a;
+            box-shadow: 0 0 8px rgba(255,208,74,0.8);
+            position: absolute; top: 50%; left: 0%;
+            transform: translate(-50%, -50%);
+            transition: left 0.2s linear;
+            pointer-events: none;
+        }
+        .cp-controls {
+            display: flex; align-items: center; gap: 10px; justify-content: center;
+        }
+        .cp-btn {
+            border: none; cursor: pointer; font-family: 'Noto Sans Myanmar', sans-serif;
+            font-weight: 700; transition: all 0.2s; border-radius: 12px;
+        }
+        .cp-play {
+            width: 52px; height: 52px; border-radius: 50%;
+            background: linear-gradient(135deg, #c49a1a, #ffd04a);
+            color: #0d0a1a; font-size: 1.3rem;
+            box-shadow: 0 0 20px rgba(255,208,74,0.45);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .cp-play:hover { box-shadow: 0 0 32px rgba(255,208,74,0.7); transform: scale(1.07); }
+        .cp-skip {
+            background: rgba(255,208,74,0.1); color: var(--gold);
+            border: 1px solid rgba(255,208,74,0.25);
+            padding: 8px 14px; font-size: 0.78rem;
+        }
+        .cp-skip:hover { background: rgba(255,208,74,0.2); }
+        .cp-vol-wrap {
+            display: flex; align-items: center; gap: 6px; margin-left: auto;
+        }
+        .cp-vol-icon { cursor: pointer; font-size: 1rem; }
+        .cp-vol {
+            -webkit-appearance: none; appearance: none;
+            width: 70px; height: 4px; border-radius: 99px;
+            background: rgba(255,208,74,0.2); outline: none; cursor: pointer;
+        }
+        .cp-vol::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 13px; height: 13px;
+            border-radius: 50%; background: var(--gold);
+            box-shadow: 0 0 6px rgba(255,208,74,0.6);
+        }
+
+        /* Player download buttons */
+        .player-downloads {
+            display: flex; gap: 10px; margin-bottom: 20px;
+        }
+        .pdl-btn {
+            flex: 1; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            border-radius: 14px; text-decoration: none;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.85rem; font-weight: 600;
+            transition: all 0.25s; border: 1px solid var(--border);
+        }
+        .pdl-audio {
+            background: rgba(255,208,74,0.15); color: var(--gold);
+            border-color: rgba(255,208,74,0.45);
+        }
+        .pdl-audio:hover { background: rgba(255,208,74,0.28); box-shadow: 0 4px 20px rgba(255,208,74,0.3); }
+        .pdl-pdf {
+            background: rgba(140,80,255,0.15); color: #c49aff;
+            border-color: rgba(140,80,255,0.4);
+        }
+        .pdl-pdf:hover { background: rgba(140,80,255,0.28); box-shadow: 0 4px 20px rgba(140,80,255,0.3); }
+
+        .pdf-label { font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
+        .pdf-viewer {
+            width: 100%; height: 72vh;
+            border: 1px solid var(--border);
+            border-radius: 20px; background: var(--surface);
+        }
+
+        /* Animations on load */
+        .lesson-card { animation: card-in 0.35s ease both; }
+        @keyframes card-in {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .img-fix { width: 100%; height: 100%; object-fit: cover; display: block; }
+    </style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+    <div class="splash-ring">
+        <img src="https://i.ibb.co/LDh3jzBD/Sayadaw-nandamalabhivamsa.jpg" alt="logo">
+    </div>
+    <div class="splash-title">University of Wisdom Land</div>
+    <div class="splash-sub">သုတဓမ္မ ဒီပလိုမာ</div>
+    <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div class="nav-left">
+            <div class="logo-ring">
+                <img src="https://i.ibb.co/LDh3jzBD/Sayadaw-nandamalabhivamsa.jpg" alt="logo" class="img-fix">
+            </div>
+            <div class="nav-titles">
+                <strong>Suta Dhamma Diploma</strong>
+                <span>University Of Wisdom Land</span>
+            </div>
+        </div>
+        <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">☀️</button>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<main class="container">
+    <div class="hero">
+        <div class="hero-label">Diploma Course</div>
+        <h1 class="hero-title">သုတဓမ္မ ဒီပလိုမာ</h1>
+        <div class="hero-divider"><span>❋</span></div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" id="b1" onclick="load(1)">Level 1</button>
+        <button class="tab-btn" id="b2" onclick="load(2)">Level 2</button>
+        <button class="tab-btn" id="b3" onclick="load(3)">Level 3</button>
+    </div>
+
+    <div id="list"></div>
+</main>
+
+<!-- PLAYER PAGE -->
+<div id="player-page" class="hidden">
+    <div class="player-inner">
+        <div class="player-header">
+            <button class="close-btn" onclick="closePlayer()">✕</button>
+            <div class="player-title-wrap">
+                <div class="player-label">Now Playing</div>
+                <div id="p-title">Title</div>
+            </div>
+        </div>
+
+        <div class="audio-wrap">
+            <audio id="audio"></audio>
+            <div class="cp-time-row">
+                <span id="cp-cur">0:00</span>
+                <span id="cp-dur">0:00</span>
+            </div>
+            <div class="cp-seek-wrap" id="cp-seek-wrap">
+                <div class="cp-seek-bg">
+                    <div class="cp-seek-fill" id="cp-fill"></div>
+                    <div class="cp-seek-thumb" id="cp-thumb"></div>
+                </div>
+            </div>
+            <div class="cp-controls">
+                <button class="cp-btn cp-skip" onclick="skipAudio(-10)">⏮ 10s</button>
+                <button class="cp-btn cp-play" id="cp-play" onclick="togglePlay()">▶</button>
+                <button class="cp-btn cp-skip" onclick="skipAudio(10)">10s ⏭</button>
+                <div class="cp-vol-wrap">
+                    <span class="cp-vol-icon" id="cp-vol-icon" onclick="toggleMute()">🔊</span>
+                    <input type="range" class="cp-vol" id="cp-vol" min="0" max="1" step="0.05" value="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="player-downloads">
+            <a id="dl-audio" href="#" download class="pdl-btn pdl-audio">
+                <span>🎵</span> Audio Download
+            </a>
+            <a id="dl-pdf" href="#" download class="pdl-btn pdl-pdf">
+                <span>📄</span> PDF Download
+            </a>
+        </div>
+
+        <div class="pdf-label">📖 Lesson Notes</div>
+        <iframe id="pdf" class="pdf-viewer" loading="lazy"></iframe>
+    </div>
+</div>
+
+<script>
+    const lessonData = {
+        1: [
+            { t: "ဘဝခရီးဝယ်ရွေးချယ်ရမည့်လမ်း", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/001-UOWL-Sutadhamma-2007-07-25-bawakhayeewair.mp3", p: "https://dhammadownload.com/File-Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/UOWL-A4-Book1.pdf" },
+            { t: "မေတ္တသုတ်အနှစ်ချုပ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/004-UOWL-Sutadhamma-2009-12-20-MettaThoatAhNhitChoke.mp3", p: "https://gtg-drnandamala.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2022/01/14023742/%E1%80%99%E1%80%B1%E1%80%90%E1%80%B9%E1%80%90%E1%80%AC%E1%80%9E%E1%80%AF%E1%80%90%E1%80%BA%E1%80%A1%E1%80%94%E1%80%BE%E1%80%85%E1%80%BA%E1%80%81%E1%80%BB%E1%80%AF%E1%80%95%E1%80%BA.pdf" },
+            { t: "စိတ်၏အညစ်အကြေးများကို ဖယ်ရှားခြင်း", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/003-UOWL-Sutadhamma-2011-02-13-SateEiAhNyitAhKayeMyar.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/06/56-Dr-Nandamala-SaitEiAhNyitAhKayeMyarKoPawelSharChin.pdf" },
+            { t: "မြတ်ဗုဒ္ဒဒေသနာနှင့်‌ယနေ့ကမ္ဘာ", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/002-UOWL-Sutadhamma-MyatBuddhaNhitYaNaeKabar.mp3", p: "https://dhammadownload.com/File-Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/UOWL-A4-Book2.pdf" },
+            { t: "သမထနှင့် ဝိပဿနာ", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/005-UOWL-Sutadhamma-2008-12-18-samatha-and-vipassana.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/06/Dr-Nandamalabhivamsa-ThaMaHtaNhintWiPaThaNar-compressed.pdf" }
+        ],
+        2: [
+            { t: "ဓမ္မအသိဖြင့် အကျိုးရှိရှိနေမည်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/006-UOWL-Sutadhamma-2008-10-18-DhammaAhTheatPhyint.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/006-Dr-Nandamalabhivamsa-DhammarAThiPhinAkyoChiChiNayMyi.pdf" },
+            { t: "စိတ်၏အတွေးများ", a: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/Level%E1%81%82-%E1%80%85%E1%80%AD%E1%80%90%E1%80%BA%E1%81%8F%E1%80%A1%E1%80%90%E1%80%BD%E1%80%B1%E1%80%B8%E1%80%99%E1%80%BB%E1%80%AC%E1%80%B8.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/007-UOWL-Sutadhamma-2009-02-04-SaitEiAhTwayMyar.pdf" },
+            { t: "ဥပုသ်စောင့်ခြင်း အဓိပ္ပာယ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/008-UOWL-Sutadhamma-2009-04-02-AuPokeSauntChinAhDatePel.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/008-UOWL-Sutadhamma-2009-04-02-AuPokeSauntChinAhDatePel.pdf" },
+            { t: "ခန္ဓသုတ်အနှစ်ချုပ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/009-UOWL-Sutadhamma-2010-03-18-KhandaThoatAhNyitCholte.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/009-UOWL-Sutadhamma-2010-03-18-KhandaThoatAhNyitCholte.pdf" },
+            { t: "လူတိုင်းကျင့်ရန် သတိပဠာန်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/010-UOWL-Sutadhamma-2009-04-16-LuTainKyinkYanThaTiPaHtan.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/010-UOWL-Sutadhamma-2009-04-16-LuTainKyinkYanThaTiPaHtan.pdf" }
+        ],
+        3: [
+            { t: "သူတော်ကောင်းတို့၏ စိတ်နေသဘောထား", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/011-UOWL-Sutadhamma-2008-11-25-ThuTawKaungToIiSaitNayThaBawHtar.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/011-UOWL-Sutadhamma-2008-11-25-ThuTawKaungToIiSaitNayThaBawHtar.pdf" },
+            { t: "ဘာသာတရားလိုက်နာကျင့်သုံးခြင်း၏ ရည်ရွယ်ချက်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/012-UOWL-Sutadhamma-2010-10-05-BarTharTaYarLiteNarKyintThoneChinAiYeeYwarChat.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/012-UOWL-Sutadhamma-2010-10-05-BarTharTaYarLiteNarKyintThoneChinAiYeeYwarChat.pdf" },
+            { t: "စိတ်၏ထွက်ပေါက်များ", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/013-UOWL-Sutadhamma-2009-12-01-SaitEiHtawkPaukMyar.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/013-UOWL-Sutadhamma-2009-12-01-SaitEiHtawkPaukMyar.pdf" },
+            { t: "ရတနာသုတ် အနှစ်ချုပ်", a: "https://dhammadownload.com/MP3Library/University-Of-Wisdom-Land/Diploma-in-Sutadhamma/014-1-UOWL-Sutadhamma-2010-07-03-YadaNaThoteAhNhitChote-1.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/014-UOWL-Sutadhamma-2010-07-03-YadaNaThoteAhNhitChote.pdf" },
+            { t: "ရှင်အာနန္ဒာ၏ ဝိပဿနာ", a: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/Level%E1%81%83-%E1%80%9B%E1%80%BE%E1%80%84%E1%80%BA%E1%80%A1%E1%80%AC%E1%80%94%E1%80%94%E1%80%B9%E1%80%92%E1%80%AC%E1%81%8F%E1%80%9D%E1%80%AD%E1%80%95%E1%80%BF%E1%80%94%E1%80%AC.mp3", p: "https://www.universitywisdomland.edu.mm/wp-content/uploads/2022/07/015-UOWL-Sutadhamma-2010-04-03-AshinArNandaEiVipassana.pdf" }
+        ]
+    };
+
+    const audioEl = document.getElementById('audio');
+    const cpPlay = document.getElementById('cp-play');
+    const cpFill = document.getElementById('cp-fill');
+    const cpThumb = document.getElementById('cp-thumb');
+    const cpCur = document.getElementById('cp-cur');
+    const cpDur = document.getElementById('cp-dur');
+    const cpVol = document.getElementById('cp-vol');
+    const cpVolIcon = document.getElementById('cp-vol-icon');
+    const cpSeekWrap = document.getElementById('cp-seek-wrap');
+
+    function fmt(s) {
+        if (isNaN(s)) return '0:00';
+        const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+        return `${m}:${sec.toString().padStart(2,'0')}`;
+    }
+
+    audioEl.addEventListener('timeupdate', () => {
+        const pct = audioEl.duration ? (audioEl.currentTime / audioEl.duration) * 100 : 0;
+        cpFill.style.width = pct + '%';
+        cpThumb.style.left = pct + '%';
+        cpCur.textContent = fmt(audioEl.currentTime);
+    });
+    audioEl.addEventListener('loadedmetadata', () => { cpDur.textContent = fmt(audioEl.duration); });
+    audioEl.addEventListener('play', () => { cpPlay.textContent = '⏸'; });
+    audioEl.addEventListener('pause', () => { cpPlay.textContent = '▶'; });
+    audioEl.addEventListener('ended', () => { cpPlay.textContent = '▶'; });
+
+    cpSeekWrap.addEventListener('click', e => {
+        const rect = cpSeekWrap.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        if (audioEl.duration) audioEl.currentTime = pct * audioEl.duration;
+    });
+
+    cpVol.addEventListener('input', () => {
+        audioEl.volume = cpVol.value;
+        cpVolIcon.textContent = cpVol.value == 0 ? '🔇' : cpVol.value < 0.5 ? '🔉' : '🔊';
+    });
+
+    function togglePlay() {
+        audioEl.paused ? audioEl.play().catch(()=>{}) : audioEl.pause();
+    }
+    function skipAudio(sec) { audioEl.currentTime = Math.max(0, audioEl.currentTime + sec); }
+    function toggleMute() {
+        audioEl.muted = !audioEl.muted;
+        cpVolIcon.textContent = audioEl.muted ? '🔇' : '🔊';
+    }
+
+    function load(lvl) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.getElementById('b' + lvl);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        const list = document.getElementById('list');
+        list.innerHTML = '';
+
+        lessonData[lvl].forEach((item, i) => {
+            const card = document.createElement('div');
+            card.className = 'lesson-card';
+            card.style.animationDelay = `${i * 0.06}s`;
+
+            // Get filename from URL for download
+            const audioFilename = item.a.split('/').pop() || 'audio.mp3';
+            const pdfFilename = item.p.split('/').pop() || 'document.pdf';
+
+            card.innerHTML = `
+                <div class="card-top" onclick="openPlayer(${JSON.stringify(item).replace(/"/g, '&quot;')})">
+                    <div class="num-box">${String(i + 1).padStart(2, '0')}</div>
+                    <div class="lesson-text">${item.t}</div>
+                    <span class="card-arrow">›</span>
+                </div>
+                <div class="card-actions">
+                    <a class="dl-btn" href="${item.a}" download="${audioFilename}" title="Audio Download">
+                        <span class="dl-icon">🎵</span> Audio ရယူမည်
+                    </a>
+                    <a class="dl-btn" href="${item.p}" download="${pdfFilename}" target="_blank" title="PDF Download">
+                        <span class="dl-icon">📄</span> PDF ရယူမည်
+                    </a>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    }
+
+    function openPlayer(item) {
+        document.getElementById('player-page').classList.remove('hidden');
+        document.getElementById('p-title').textContent = item.t;
+        audioEl.src = item.a;
+        cpPlay.textContent = '▶';
+        cpFill.style.width = '0%';
+        cpThumb.style.left = '0%';
+        cpCur.textContent = '0:00';
+        cpDur.textContent = '0:00';
+        document.getElementById('dl-audio').href = item.a;
+        document.getElementById('dl-pdf').href = item.p;
+        document.getElementById('pdf').src = `https://docs.google.com/viewer?url=${encodeURIComponent(item.p)}&embedded=true`;
+        audioEl.play().catch(() => {});
+        document.getElementById('player-page').scrollTop = 0;
+    }
+
+    function closePlayer() {
+        document.getElementById('player-page').classList.add('hidden');
+        audioEl.pause();
+    }
+
+    function toggleTheme() {
+        const isDark = !document.body.hasAttribute('data-theme') || document.body.getAttribute('data-theme') !== 'light';
+        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+    }
+
+    window.onload = () => {
+        load(1);
+
+        // Splash — fade out then fully remove
+        const splash = document.getElementById('splash');
+        setTimeout(() => {
+            splash.classList.add('hide-splash');
+            setTimeout(() => { splash.style.display = 'none'; }, 850);
+        }, 2800);
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .catch(err => console.log('SW error:', err));
+        }
+    };
+</script>
+</body>
+</html>
